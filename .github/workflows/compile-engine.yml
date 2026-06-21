@@ -25,17 +25,16 @@ jobs:
         git clone https://github.com/official-stockfish/Stockfish.git
         cd Stockfish/src
         
-        # [수정포인트] 2. 개별 C++ 파일들을 고속으로 먼저 컴fight(오브젝트화) 진행
-        # 오타 수정: DEMBERDED -> EMBEDDED
-        echo "=== 1단계: 개별 소스코드 컴파일 진행 ==="
-        emcc -c *.cpp -O3 -flto -DEMBEDDED_SMALL_NNUE
+        # [해결포인트] 2. 메인 소스뿐만 아니라 nnue, syzygy 폴더의 C++ 소스까지 몽땅 긁어모으기
+        echo "=== 1단계: 하위 폴더 포함 모든 C++ 소스코드 고속 컴파일 ==="
+        emcc -c *.cpp nnue/*.cpp syzygy/*.cpp -O3 -flto -DARCH=general-32
         
-        # [수정포인트] 3. 컴파일된 결과물(.o)들을 하나의 자바스크립트 파일로 싱글 바인딩(Link)
-        echo "=== 2단계: 단일 자바스크립트 파일로 링킹 및 추출 ==="
+        # [해결포인트] 3. 구워진 모든 오브젝트 파일(.o)을 빠짐없이 링크하여 단일 파일로 링킹
+        echo "=== 2단계: 수제 ChessAssistant 단일 자바스크립트 엔진 추출 ==="
         emcc *.o -o stockfish17-light.js \
           -O3 \
           -flto \
-          -s EXTRA_EXPORTED_RUNTIME_METHODS="['stringToUTF8']" \
+          -s EXPORTED_RUNTIME_METHODS="['stringToUTF8']" \
           -s ALLOW_MEMORY_GROWTH=1 \
           -s ENVIRONMENT="worker" \
           -s MODULARIZE=1 \
