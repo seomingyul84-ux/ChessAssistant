@@ -17,7 +17,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-950 text-white select-none">
-      {/* 🌐 상단 네비게이션 바 */}
       <nav className="bg-gray-900 border-b border-gray-800 px-6 py-4 flex items-center justify-between sticky top-0 z-50">
         <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setCurrentMenu('홈')}>
           <span className="text-2xl">👑</span>
@@ -41,7 +40,6 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* 🖥️ 선택한 메뉴에 따른 동적 컨텐츠 렌더링 구역 */}
       <main className="p-6 max-w-6xl mx-auto">
         {currentMenu === '홈' && (
           <div className="text-center py-20 space-y-4">
@@ -64,11 +62,9 @@ export default function Home() {
           </div>
         )}
 
-        {/* 메뉴 연동 분기 */}
         {currentMenu === 'review-with-engine' && <ReviewPage />}
         {currentMenu === 'engine-training' && <EngineTrain />}
 
-        {/* 미구현 탭들 더미 플레이스홀더 */}
         {currentMenu === 'review-alone' && (
           <div className="text-center py-12 bg-gray-900 rounded-2xl border border-gray-800">
             <h3 className="text-xl font-bold text-amber-400">♟️ 혼자서 복기 모드</h3>
