@@ -1,5 +1,3 @@
-
-
 export const metadata = {
   title: 'ChessAssistant',
   description: 'AI Chess Analysis and Training Platform',
